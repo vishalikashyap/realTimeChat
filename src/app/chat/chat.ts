@@ -12,7 +12,7 @@ import { FilterPipe } from '../filter.pipe';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, FilterPipe,PickerModule],
+  imports: [CommonModule, FormsModule,PickerModule],
   templateUrl: './chat.html',
   styleUrl: './chat.scss',
 })
@@ -34,6 +34,18 @@ export class Chat implements OnDestroy {
   groupName = '';
   selectedMembers: string[] = [];
   searchText = '';
+
+  suggestions: string[] = [
+  'Hello 👋',
+  'How are you?',
+  'What’s up?',
+  'Let’s meet at 5 PM',
+  'Good morning!',
+  'Thank you!',
+  'See you soon 😊'
+];
+filteredSuggestions: string[] = [];
+
 
   private destroy$ = new Subject<void>();
 
@@ -139,7 +151,20 @@ export class Chat implements OnDestroy {
 
     this.message = '';
   }
-
+filterUsers(searchText:any) {
+  const search = searchText.toLowerCase();
+  console.log(search,"s")
+  if(search !=''){
+    console.log("hiiiiiiiiiiiiiiiiiii")
+ this.users=this.users.filter(user =>
+    user.username.toLowerCase().includes(search)
+  );
+}else{
+   console.log("hiiiiiiiiiiiiiiiiiii__________________hiiiiiiiiiiiiiiiiiiiii")
+this.getUsers()
+}
+  console.log(this.users)
+}
   selectUser(user: any, type: 'one_to_one' | 'group') {
     this.chatType = type;
     this.message='';
@@ -226,6 +251,36 @@ startAudioCall() {
 
 startVideoCall() {
   console.log('Video call started with', this.receiverName);
-  // Add video logic here
+
 }
+onFileSelected(event: any): void {
+  const file = event.target.files[0];
+  if (file) {
+    console.log('Selected file:', file);
+  
+  }
+}
+
+// Filter suggestions based on input
+filterSuggestions(input: string): void {
+  if (!input) {
+    this.filteredSuggestions = [];
+    return;
+  }
+
+  const lowerInput = input.toLowerCase();
+  this.filteredSuggestions = this.suggestions
+    .filter(s =>
+      s.toLowerCase().includes(lowerInput) &&
+      s.toLowerCase() !== lowerInput
+    )
+    .slice(0, 5);
+}
+
+// Select a suggestion from list
+selectSuggestion(suggestion: string): void {
+  this.message = suggestion;
+  this.filteredSuggestions = [];
+}
+
 }

@@ -292,3 +292,21 @@
     padding: 6px;
     border-radius: 7px;
 }
+.chat-input-wrapper {
+  position: relative;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input-box {
+  background-color: #fff;
+  width: 100%;
+}
+
+.emoji-picker-popup {
+  position: absolute;
+  bottom: 60px; // adjust height above input box
+  left: 0;
+  z-index: 1050;
+}

@@ -4,9 +4,9 @@
     <h3>Chat</h3>
     <!-- Group Creation Form -->
 
-    <input type="text" placeholder="Search" class="search" [(ngModel)]="searchText" />
+    <input type="text" placeholder="Search" class="search" [(ngModel)]="searchText" (ngModelChange)="filterUsers(searchText)" />
     <div class="user-list">
-      <div *ngFor="let user of users | filter:searchText:'username'" class="user" [class.active]="user === selectedUser"
+      <div *ngFor="let user of users " class="user" [class.active]="user === selectedUser"
         (click)="selectUser(user,'one_to_one')">
         <div class="avatar">{{ user.username[0] | uppercase }}</div>
         <div class="info">
@@ -14,8 +14,8 @@
           <span>Last message...</span>
         </div>
       </div>
-      <div *ngIf="!users.length && !searchText">
-        <p>Start new chat</p>
+      <div *ngIf="!users.length && searchText">
+        <p class="text-align-center">No matching users found</p>
       </div>
     </div>
 
@@ -23,9 +23,9 @@
     <hr>
     <div class="d-flex justify-content-between">
       <div class="fw-bold">Groups</div>
-      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#groupModal" title="Create Group">
-        👥
-      </button>
+    <button type="button" class="btn btn-light p-1" data-bs-toggle="modal" data-bs-target="#groupModal" title="Create Group">
+  <i class="bi bi-people-fill fs-5"></i>
+</button>
     </div>
     <hr>
     <!-- Group Creation Modal -->
@@ -61,17 +61,14 @@
       </div>
     </div>
 
-    <div class="user-list">
-      <div *ngFor="let user of groups | filter:searchText:'username'" class="user"
+    <div class="user-list" *ngIf="groups.length ">
+      <div *ngFor="let user of groups" class="user"
         [class.active]="user === selectedUser" (click)="selectUser(user,'group')">
         <div class="avatar">{{ user.group_name[0] | uppercase }}</div>
         <div class="info">
           <strong>{{ user.group_name |titlecase }}</strong>
           <span>Last message...</span>
         </div>
-      </div>
-      <div *ngIf="!groups.length || !searchText">
-        <p>Start new chat</p>
       </div>
     </div>
   </aside>
@@ -92,15 +89,20 @@
 
   <!-- Action Icons -->
   <div class="chat-actions d-flex align-items-center gap-3">
-    <button class="btn btn-light p-1" title="Audio Call" (click)="startAudioCall()">
-      📞
-    </button>
-    <button class="btn btn-light p-1" title="Video Call" (click)="startVideoCall()">
-      🎥
-    </button>
-    <!-- <button class="btn btn-light p-1" title="Emoji" (click)="toggleEmojiPicker()">
-      😊
-    </button> -->
+<!-- Audio Call -->
+<button class="btn btn-light p-1" title="Audio Call" (click)="startAudioCall()">
+  <i class="bi bi-telephone-fill"></i>
+</button>
+
+<!-- Video Call -->
+<button class="btn btn-light p-1" title="Video Call" (click)="startVideoCall()">
+  <i class="bi bi-camera-video-fill"></i>
+</button>
+
+<!-- Menu (You can use three dots or menu icon) -->
+<button class="btn btn-light p-1" title="Menu" >
+  <i class="bi bi-three-dots-vertical"></i>
+</button>
   </div>
 </div>
 
@@ -125,12 +127,50 @@
         </div>
       </div>
     </div>
+  <div class="chat-input-wrapper position-relative">
+  <!-- Emoji Picker Popup -->
+  <emoji-mart 
+    (emojiSelect)="addEmoji($event)" 
+    *ngIf="showEmojiPicker" 
+    class="emoji-picker-popup">
+  </emoji-mart>
 
-<emoji-mart (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"></emoji-mart>
-    <div class="chat-input">
-      <input [(ngModel)]="message" placeholder="Write your message..." /> 
-      <button (click)="toggleEmojiPicker()" title="Emoji">😊</button>
-      <button (click)="sendMessage()">➤</button>
-    </div>
+  <!-- Chat Input Bar -->
+  <div class="chat-input-box d-flex align-items-center border rounded px-2 py-1">
+    <button class="btn p-0 me-2" (click)="toggleEmojiPicker()" title="Emoji">
+      <i class="bi bi-emoji-smile fs-5"></i>
+    </button>
+
+  <!-- Attachment Button -->
+    <label class="btn p-0 m-0" title="Attach File">
+      <i class="bi bi-paperclip fs-5"></i>
+      <input type="file" hidden (change)="onFileSelected($event)" />
+    </label>
+
+    <input 
+      [(ngModel)]="message" 
+      placeholder="Write your message..." 
+      class="form-control border-0 shadow-none" 
+      (keyup.enter)="sendMessage()"
+    />
+
+    <button class="btn p-0 ms-2" (click)="sendMessage()" title="Send">
+      <i class="bi bi-send-fill fs-5"></i>
+    </button>
+
+      <!-- Suggestion Dropdown -->
+  <ul *ngIf="filteredSuggestions.length && message"
+      class="list-group position-absolute bg-white shadow border rounded"
+      style="z-index: 1050; bottom: 60px; left: 10px; width: 300px;">
+    <li class="list-group-item list-group-item-action"
+        *ngFor="let suggestion of filteredSuggestions"
+        (click)="selectSuggestion(suggestion)">
+      {{ suggestion }}
+    </li>
+  </ul>
+
+  </div>
+</div>
+
   </main>
 </div>
