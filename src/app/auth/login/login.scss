@@ -1,0 +1,83 @@
+/* Layout adjustments for login page */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // min-height: 100vh;
+    background-color: #f8f9fa; /* Light background */
+  }
+  
+  .login-container {
+    display: flex;
+    // max-width: 900px; /* Full-width on large screens */
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .left-panel {
+    width: 50%;
+    background-color: #1e1e2f; /* Primary blue from your dashboard */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+  .illustration svg {
+    max-width: 100%;
+    height: auto; /* Ensures the SVG scales properly */
+    width: 150px; /* Default width */
+    margin-top: 20px;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  @media (max-width: 768px) {
+    .illustration svg {
+      width: 100px; /* Smaller SVG on mobile */
+    }
+  }
+  .right-panel {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 600px; /* Maximum width of the card */
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .form-group input {
+    padding-left: 40px;
+  }
+  
+  .bi {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* For mobile responsiveness */
+  @media (max-width: 768px) {
+    .login-container {
+      flex-direction: column;
+      width: 100%;
+      height: auto; /* Adjust height for mobile */
+    }
+  
+    .left-panel, .right-panel {
+      width: 100%;
+    }
+  
+    .card {
+      width: 90%;
+      padding: 1.5rem;
+    }
+  }
+  

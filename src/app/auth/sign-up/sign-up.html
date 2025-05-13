@@ -1,0 +1,57 @@
+<div class="login-wrapper d-flex align-items-center justify-content-center bg-light">
+  <div class="login-container d-flex overflow-hidden">
+    
+    <!-- Left Panel -->
+    <div class="left-panel text-white d-flex flex-column justify-content-center align-items-center" style="width: 50%;">
+      <div class="tab-switcher text-center">
+        <h2 class="fw-bold mb-3">Create an Account</h2>
+        <p>Already have an account?</p>
+        <a routerLink="/auth/login" class="btn btn-outline-light mt-2">LOGIN</a>
+      </div>
+      <div class="illustration mt-4">
+        <!-- Example of inline SVG illustration -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" width="150" height="150">
+          <path d="M16 3v4m2-2h-4m4 4h-4a4 4 0 0 0-4 4v1a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4v-1a4 4 0 0 0-4-4h-4zm0 0h4"></path>
+        </svg> -->
+      </div>
+    </div>
+  
+    <!-- Right Panel (Card) -->
+    <div class="right-panel p-4 d-flex justify-content-center align-items-center" style="width: 50%; background-color: white;">
+      <div class="card shadow" style="width: 100%; max-width: 600px; padding: 2rem;">
+        
+        <div class="logo text-center mb-4">
+          <!-- <img src="assets/logo.png" alt="Logo" style="height: 50px;" /> -->
+          <h3 class="mt-2">SIGN UP</h3>
+        </div>
+  
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="form-group mb-3 position-relative">
+            <input type="text" formControlName="username" class="form-control ps-5" placeholder="Full Name" />
+            <i class="bi bi-person position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+          </div>
+  
+          <div class="form-group mb-3 position-relative">
+            <input type="email" formControlName="email" class="form-control ps-5" placeholder="Email Address" />
+            <i class="bi bi-envelope position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+          </div>
+  
+          <div class="form-group mb-3 position-relative">
+            <input type="password" formControlName="password" class="form-control ps-5 pe-5" placeholder="Password" />
+            <i class="bi bi-lock position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+          </div>
+
+          <div class="form-group mb-3 position-relative">
+            <input type="password" formControlName="confirmPassword" class="form-control ps-5 pe-5" placeholder="Confirm Password" />
+            <i class="bi bi-lock position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+          </div>
+  
+          <button type="submit" class="btn w-100" style="background-color: #1e1e2f; color: white;" [disabled]="signupForm.invalid">
+            Sign Up
+          </button>
+        </form>
+      </div>
+    </div>
+  
+  </div>
+</div>

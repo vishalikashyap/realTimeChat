@@ -1,0 +1,136 @@
+<div class="chat-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>Chat</h3>
+    <!-- Group Creation Form -->
+
+    <input type="text" placeholder="Search" class="search" [(ngModel)]="searchText" />
+    <div class="user-list">
+      <div *ngFor="let user of users | filter:searchText:'username'" class="user" [class.active]="user === selectedUser"
+        (click)="selectUser(user,'one_to_one')">
+        <div class="avatar">{{ user.username[0] | uppercase }}</div>
+        <div class="info">
+          <strong>{{ user.username |titlecase }}</strong>
+          <span>Last message...</span>
+        </div>
+      </div>
+      <div *ngIf="!users.length && !searchText">
+        <p>Start new chat</p>
+      </div>
+    </div>
+
+    <!-- Group -->
+    <hr>
+    <div class="d-flex justify-content-between">
+      <div class="fw-bold">Groups</div>
+      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#groupModal" title="Create Group">
+        👥
+      </button>
+    </div>
+    <hr>
+    <!-- Group Creation Modal -->
+    <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="groupModalLabel">Create Group</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <input type="text" class="form-control mb-3" placeholder="Group Name" [(ngModel)]="groupName" />
+
+            <label class="form-label">Select Members:</label>
+            <div class="form-check" *ngFor="let user of users">
+              <input class="form-check-input" type="checkbox" [value]="user.username"
+                (change)="toggleUserSelection(user.username)" id="{{user.username}}">
+              <label class="form-check-label" [for]="user.username">
+                {{ user.username | titlecase }}
+              </label>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createGroup()">Create
+              Group</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="user-list">
+      <div *ngFor="let user of groups | filter:searchText:'username'" class="user"
+        [class.active]="user === selectedUser" (click)="selectUser(user,'group')">
+        <div class="avatar">{{ user.group_name[0] | uppercase }}</div>
+        <div class="info">
+          <strong>{{ user.group_name |titlecase }}</strong>
+          <span>Last message...</span>
+        </div>
+      </div>
+      <div *ngIf="!groups.length || !searchText">
+        <p>Start new chat</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Chat Panel -->
+  <main class="chat-panel">
+   <div class="chat-header d-flex justify-content-between align-items-center">
+  <div class="user-info d-flex align-items-center gap-2">
+    <div class="avatar">{{ receiverName[0] | uppercase }}</div>
+    <div>
+      <strong *ngIf="receiverName">{{ receiverName | titlecase }}</strong>
+      <span [class.online]="onlineUsers.includes(receiverName)"
+            [class.offline]="!onlineUsers.includes(receiverName)">
+         {{ onlineUsers.includes(receiverName) ? 'Online' : 'Offline' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Action Icons -->
+  <div class="chat-actions d-flex align-items-center gap-3">
+    <button class="btn btn-light p-1" title="Audio Call" (click)="startAudioCall()">
+      📞
+    </button>
+    <button class="btn btn-light p-1" title="Video Call" (click)="startVideoCall()">
+      🎥
+    </button>
+    <!-- <button class="btn btn-light p-1" title="Emoji" (click)="toggleEmojiPicker()">
+      😊
+    </button> -->
+  </div>
+</div>
+
+    <div class="chat-messages" id="chatBox" *ngIf="groupedMessages">
+      <div *ngFor="let group of groupedMessages">
+        <!-- Date Header -->
+        <div class=" text-center mb-2">
+          <small class="date-header">{{ group.date }}</small>
+        </div>
+
+        <!-- Messages -->
+        <div *ngFor="let msg of group.messages" class="message-container" [class.me]="msg.sender === currentUser">
+          <div class="message-bubble">
+            <ng-container *ngIf="chatType === 'group'">
+              <strong>{{ msg.sender === currentUser ? 'You' : (msg.sender | titlecase) }}</strong>
+            </ng-container>
+            <div>
+              {{ msg.message }}
+              <span class="time">{{ msg.created_at | date: 'shortTime' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<emoji-mart (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker"></emoji-mart>
+    <div class="chat-input">
+      <input [(ngModel)]="message" placeholder="Write your message..." /> 
+      <button (click)="toggleEmojiPicker()" title="Emoji">😊</button>
+      <button (click)="sendMessage()">➤</button>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,49 @@
+<div class="login-wrapper d-flex align-items-center justify-content-center bg-light">
+  <div class="login-container d-flex overflow-hidden">
+    
+    <!-- Left Panel -->
+    <div class="left-panel text-white d-flex flex-column justify-content-center align-items-center" style="width: 50%;">
+      <div class="tab-switcher text-center">
+        <h2 class="fw-bold mb-3">Welcome Back!</h2>
+        <p>Don't have an account?</p>
+        <a routerLink="/auth/register" class="btn btn-outline-light mt-2">SIGN UP</a>
+      </div>
+      <div class="illustration mt-4">
+        <!-- Example of inline SVG illustration -->
+        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in" width="150" height="150">
+          <path d="M15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l5 5-5 5"></path>
+        </svg> -->
+      </div>
+    </div>
+  
+    <!-- Right Panel (Card) -->
+    <div class="right-panel p-4 d-flex justify-content-center align-items-center" style="width: 50%; background-color: white;">
+      <div class="card shadow" style="width: 100%; max-width: 600px; padding: 2rem;">
+        
+        <div class="logo text-center mb-4">
+          <!-- <img src="assets/logo.png" alt="Logo" style="height: 50px;" /> -->
+          <h3 class="mt-2">LOGIN</h3>
+        </div>
+  
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="form-group mb-3 position-relative">
+            <input type="email" formControlName="email" class="form-control ps-5" placeholder="Email" />
+            <i class="bi bi-envelope position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+          </div>
+          <div class="form-group mb-3 position-relative">
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control ps-5 pe-5" placeholder="Password" />
+            <i class="bi bi-lock position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+            <i class="bi position-absolute top-50 end-0 translate-middle-y pe-3" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" style="cursor: pointer;" (click)="togglePassword()"></i>
+          </div>
+  
+          <div class="d-flex justify-content-end mb-3">
+            <a href="#" class="text-decoration-none small">Forgot Password?</a>
+          </div>
+  
+          <button type="submit" class="btn  w-100" style="background-color: #1e1e2f; color: white;">LOGIN</button>
+        </form>
+      </div>
+    </div>
+  
+  </div>
+</div>

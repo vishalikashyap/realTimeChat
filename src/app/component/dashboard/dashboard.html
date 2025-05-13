@@ -1,0 +1,48 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Top section: Logo + Navigation -->
+      <div class="sidebar-top">
+        <div class="d-flex align-items-center mb-3 mt-4" style="padding-left: 6px;">
+          <img src="../../../assets/chat.png" alt="Logo" class="me-2" width="40" height="40" />
+          <div style="padding-left: 6px;">
+            <h5 class="mb-0">CHETTER</h5>
+            <!-- <small class="text-white d-flex justify-content-center">{{ currentUser |titlecase}}</small> -->
+          </div>
+        </div><hr>
+        
+  
+        <nav class="nav-links">
+          <div class="nav-item" [class.active]="activeTab === 'profile'" (click)="setActive('profile')">
+            <i class="material-icons">account_circle</i>
+            <span>Profile</span>
+          </div>
+          <div class="nav-item" [class.active]="activeTab === 'chat'" (click)="setActive('chat')">
+            <i class="material-icons">chat</i>
+            <span>Chat</span>
+          </div>
+          <div class="nav-item" [class.active]="activeTab === 'notifications'" (click)="setActive('notifications')">
+            <i class="material-icons">notifications</i>
+            <span>Notifications</span>
+          </div>
+                    
+        </nav>
+      </div>
+  
+      <!-- Bottom section: Logout -->
+      <div class="logout-section" (click)="logout()">
+        <i class="material-icons">logout</i>
+        <span>Logout</span>
+      </div>
+    </aside>
+  
+    <!-- Main Content -->
+    <main class="main-content">
+      <ng-container [ngSwitch]="activeTab">
+        <app-profile *ngSwitchCase="'profile'"></app-profile>
+        <app-notifications *ngSwitchCase="'notifications'"></app-notifications>
+        <app-chat *ngSwitchCase="'chat'"></app-chat>
+      </ng-container>
+    </main>
+  </div>
+  

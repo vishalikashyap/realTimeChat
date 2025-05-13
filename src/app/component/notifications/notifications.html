@@ -1,0 +1,40 @@
+<div class="card shadow-sm rounded-3 border-0 p-3" style=" margin: auto;">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-bold m-0">Notifications</h5>
+      <div class="d-flex gap-3 small">
+        <a href="#" class="text-primary text-decoration-none">Mark as read</a>
+        <a href="#" class="text-danger text-decoration-none">clear all</a>
+      </div>
+    </div>
+  
+    <!-- Tabs -->
+    <ul class="nav nav-tabs border-0 mb-3">
+      <li class="nav-item">
+        <a class="nav-link active fw-bold text-primary" href="#">Today <span class="badge bg-primary ms-1">2</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-muted" href="#">Previous</a>
+      </li>
+    </ul>
+  
+    <!-- Notification List -->
+    <div *ngFor="let notification of notifications" class="d-flex align-items-start mb-3 pb-3 border-bottom">
+      <div class="me-3 mt-1">
+        <span class="d-inline-block bg-primary rounded-circle" style="width: 10px; height: 10px;"></span>
+      </div>
+      <img [src]="notification.image" class="rounded-circle me-3" style="width: 45px; height: 45px;" alt="avatar" />
+      <div class="flex-grow-1">
+        <div class="fw-bold">{{ notification.name }}</div>
+        <div class="text-muted small">{{ notification.message }}</div>
+      </div>
+      <small class="text-muted ms-2">{{ notification.time }}</small>
+    </div>
+  <p>
+    1. Search bar: seach from all user for request for chat <br>
+    2. Notification of new chat,friend request send notification 
+  </p>
+    <div class="mt-3">
+      <a href="#" class="text-primary text-decoration-none small">view previous notifications</a>
+    </div>
+  </div>
+  
